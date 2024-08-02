@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #the below way we register our app with the main project
+    #the below way we register our app with the main projectt
     'projects.apps.ProjectsConfig'
 ]
 
