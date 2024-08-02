@@ -1,5 +1,28 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>Project template</h1>
+<p>Hello you are on the {{page}} page</p>
+
+<!-- the below code tells us how to write conditions as python code--> 
+{% if number > 10 %}
+    <p>number is greater than 10</p>
+{% elif number == 10 %}
+    <p>number is equal to 10</p>
+{% else %}
+    <p>number is less than 10 </p>
+{% endif %}
+
+<h1>Projects</h1>
+
+<hr>
+
+<!-- the below code tells us how to execute loops--> 
+<ul>
+    {% for project in projects%}
+        <!--<li>{{project.title}} : {{project.description}}</li>-->
+
+        <!-- using the below format for href if we change the url pattern we dont have to change the implementation everywhere because we are accessing the url by its name-->
+        <li><a href="{% url 'project' project.id%}">{{project.title}}</a> : {{project.description}}</li>
+    {% endfor %}
+</ul>
 {% endblock content %}
