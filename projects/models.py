@@ -3,6 +3,7 @@ import uuid
 
 # Create your models here.
 
+
 class Project(models.Model):
     title=models.CharField(max_length=200)
     #here null is for the table and blank is for the template

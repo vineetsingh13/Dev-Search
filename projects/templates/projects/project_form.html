@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1> Project Form </h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!--we output the model form that we pass from the view below
+    {{form}}
+    {{form.title}}-->
+    {{form.as_p}}
+    <input type="submit">
+</form>
+
+{% endblock %}
