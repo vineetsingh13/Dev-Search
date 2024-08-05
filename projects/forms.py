@@ -8,5 +8,5 @@ class ProjectForm(ModelForm):
     class Meta:
 
         model=Project
-        #field=['']
-        fields='__all__'
+        fields=['title', 'description','demo_link','source_link','tags']
+        #fields='__all__'

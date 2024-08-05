@@ -17,13 +17,38 @@
 
 <hr>
 
-<!-- the below code tells us how to execute loops--> 
+<table>
+    <tr>
+        <th>Project</th>
+        <th>Positive votes</th>
+        <th>Votes</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    {% for project in projects%}
+    <tr>
+        <td>{{project.title}}</td>
+        <td>{{project.vote_ratio}}</td>
+        <td>{{project.vote_total}}</td>
+        <td>{{project.created}}</td>
+        <td><a href="{% url 'project' project.id%}">View</a></td>
+        <td><a href="{% url 'update-project' project.id%}">Edit</a></td>
+        <td><a href="{% url 'delete-project' project.id%}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<!-- the below code tells us how to execute loops
 <ul>
     {% for project in projects%}
-        <!--<li>{{project.title}} : {{project.description}}</li>-->
+        <li>{{project.title}} : {{project.description}}</li>
 
-        <!-- using the below format for href if we change the url pattern we dont have to change the implementation everywhere because we are accessing the url by its name-->
+         using the below format for href if we change the url pattern we dont have to change the implementation everywhere because we are accessing the url by its name
         <li><a href="{% url 'project' project.id%}">{{project.title}}</a> : {{project.description}}</li>
     {% endfor %}
-</ul>
+</ul>-->
+
+
 {% endblock content %}
