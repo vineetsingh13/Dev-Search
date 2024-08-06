@@ -3,7 +3,8 @@
 
 <h1> Project Form </h1>
 
-<form method="POST" action="">
+<!--enctype to make sure the form can submit image data-->
+<form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
 
     <!--we output the model form that we pass from the view below
