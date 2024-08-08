@@ -19,10 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+#so below if we set the path empty the first page to be opened will be the respective page
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('projects.urls')),
-    path('users/',include('users.urls')),
+    path('projects/',include('projects.urls')),
+    path('',include('users.urls')),
 ]
 
 #to make django know from where to load the images on the web page
