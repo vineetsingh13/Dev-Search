@@ -1,18 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<h1> Project Form </h1>
 
-<!--enctype to make sure the form can submit image data-->
-<form method="POST" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <!--we output the model form that we pass from the view below
-    {{form}}
-    {{form.title}}-->
-    {{form.as_p}}
-    <input type="submit">
-</form>
 
 <!-- Main Section -->
 <main class="formPage my-xl">
@@ -23,26 +12,18 @@
 
             <form class="form" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <!-- Input:Text -->
-                <div class="form__field">
-                    <label for="formInput#text">Text Field: </label>
-                    <input class="input input--text" id="formInput#text" type="text" name="text"
-                        placeholder="Enter text" />
-                </div>
 
+                {% for field in form%}
                 <!-- Input:Text -->
                 <div class="form__field">
-                    <label for="formInput#text">Text Field: </label>
-                    <input class="input input--text" id="formInput#text" type="text" name="text"
-                        placeholder="Enter text" />
+                    <label for="formInput#text">{{field.label}} </label>
+                    <!--we need class below for each field for taking input so what we do is we add the class in the modelform that we created-->
+                    {{field}}
                 </div>
+                {% endfor %}
+                
 
-                <!-- Input:Text -->
-                <div class="form__field">
-                    <label for="formInput#text">Text Field: </label>
-                    <input class="input input--text" id="formInput#text" type="text" name="text"
-                        placeholder="Enter text" />
-                </div>
+                
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>
         </div>
