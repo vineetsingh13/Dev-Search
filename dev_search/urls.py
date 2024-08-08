@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('projects.urls'))
+    path('',include('projects.urls')),
+    path('users/',include('users.urls')),
 ]
 
 #to make django know from where to load the images on the web page
