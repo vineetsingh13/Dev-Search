@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
+
+
 # Create your models here.
 class Profile(models.Model):
     #so every user will have one profile and vice versa
@@ -36,4 +38,5 @@ class Skill(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
