@@ -2,10 +2,12 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Project
 from .forms import ProjectForm
+from django.contrib.auth.decorators import login_required
 
 
 #so to pass data to the html pages we pass them as dictionary in the render method
 #and we access them with {{page}} in the html pages
+@login_required(login_url="login")
 def projects(request):
     projects=Project.objects.all()
     context ={'projects': projects}
@@ -21,6 +23,7 @@ def project(request,pk):
     return render(request, 'projects/single-project.html',{'project':projectObj})  
 
 
+@login_required(login_url="login")
 def createProject(request):
     form=ProjectForm()
     context={'form':form}
@@ -36,7 +39,7 @@ def createProject(request):
     return render(request,"projects/project_form.html",context)
 
 
-
+@login_required(login_url="login")
 def updateProject(request,pk):
     project=Project.objects.get(id=pk)
     form=ProjectForm(instance=project)
@@ -53,6 +56,7 @@ def updateProject(request,pk):
     return render(request,"projects/project_form.html",context)
 
 
+@login_required(login_url="login")
 def delete_project(request,pk):
 
     project=Project.objects.get(id=pk)
