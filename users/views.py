@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from django.contrib import messages
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 @login_required(login_url="login")
@@ -25,7 +26,7 @@ def userProfile(request,pk):
 
 
 def loginPage(request):
-
+    page='login'
     #this will not allow the user to go to login page if he is logged in
     if request.user.is_authenticated:
         return redirect('profiles')
@@ -62,3 +63,27 @@ def logoutUser(request):
     logout(request)
     messages.error(request,'user was logged out!')
     return redirect('login')
+
+
+def registerUser(request):
+    page='register'
+    form =CustomUserCreationForm()
+
+    if request.method=='POST':
+        #usercreationform is a django form that is used to create a user and we can use it directly
+        form=CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            #form.save()
+            #first making sure that the name is lowercase and then saving
+            user=form.save(commit=False)
+            user.username=user.username.lower()
+            user.save()
+
+            messages.success(request,'User account was created!')
+            login(request,user)
+            return redirect('profiles')
+        else:
+            messages.error(request,'An error has occurred')
+
+    context={'page':page,'form':form}
+    return render(request,'users/login_register.html',context)
