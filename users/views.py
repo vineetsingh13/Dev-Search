@@ -61,7 +61,7 @@ def loginPage(request):
 def logoutUser(request):
     #here we just delete the current session and the user without any session id will be logged out
     logout(request)
-    messages.error(request,'user was logged out!')
+    messages.info(request,'user was logged out!')
     return redirect('login')
 
 
