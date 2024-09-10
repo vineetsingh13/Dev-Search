@@ -87,3 +87,16 @@ def registerUser(request):
 
     context={'page':page,'form':form}
     return render(request,'users/login_register.html',context)
+
+
+@login_required(login_url="login")
+def userAccount(request):
+
+    #to get the info of the logged in user
+    profile=request.user.profile
+
+    skills=profile.skill_set.all()
+    project=profile.project_set.all()
+
+    context={'profile':profile,'skills':skills,'projects':project}
+    return render(request,'users/account.html',context)
