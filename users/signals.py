@@ -28,7 +28,24 @@ def deleteUser(sender, instance,**kwargs):
     print('deleteing user....')
 
 
+def updateUser(sender,instance,created,**kwargs):
+
+    profile=instance
+    user=profile.user
+
+    #we add created condition here because in createProfile() we are already creating the profile
+    #so here when we save the user the a signal would be sent to createProfile which will become an infinite loop
+    if created == False:
+        user.first_name=profile.name
+        user.username=profile.username
+        user.email=profile.email
+        user.save()
+
+
+
+
 #on postsave we want to trigger the method which will be called
 #and we mention the model which will trigger it
 post_save.connect(createProfile,sender=User)
+post_save.connect(updateUser,sender=Profile)
 post_delete.connect(deleteUser,sender=Profile)

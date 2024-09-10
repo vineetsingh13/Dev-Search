@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from django.contrib import messages
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileForm
 # Create your views here.
 
 @login_required(login_url="login")
@@ -81,7 +81,7 @@ def registerUser(request):
 
             messages.success(request,'User account was created!')
             login(request,user)
-            return redirect('profiles')
+            return redirect('edit-account')
         else:
             messages.error(request,'An error has occurred')
 
@@ -100,3 +100,23 @@ def userAccount(request):
 
     context={'profile':profile,'skills':skills,'projects':project}
     return render(request,'users/account.html',context)
+
+
+@login_required(login_url="login")
+def editAccount(request):
+    profile=request.user.profile
+
+    #to make the form be already filled with data
+    form=ProfileForm(instance=profile)
+
+    if request.method=='POST':
+        #we are adding image also thats why FILES
+        form=ProfileForm(request.POST,request.FILES,instance=profile)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('account')
+
+    context={'form':form}
+    return render(request, 'users/profile_form.html',context)
