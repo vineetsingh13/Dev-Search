@@ -25,7 +25,25 @@ class Project(models.Model):
         return self.title
     
     class Meta:
-        ordering=['-created']
+        ordering=['-vote_ratio','-vote_total','title']
+
+
+    def reviewers(self):
+        #getting a list of all the owners of project and people who have reviewed to stop them to write further review
+        querySet=self.review_set.all().values_list('owner__id',flat=True)
+        return querySet
+
+    #adding property makes the function run as an attribute
+    @property
+    def getVoteCount(self):
+
+        reviews=self.review_set.all()
+        upVote=reviews.filter(value='up').count()
+        totalVotes=reviews.count()
+        ratio=(upVote/totalVotes)*100
+        self.vote_total=totalVotes
+        self.vote_ratio=ratio
+        self.save()
         
 
 class Review(models.Model):
@@ -34,6 +52,7 @@ class Review(models.Model):
         ('down','Down Vote')
     )
 
+    owner=models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
     #so using cascade once the project is deleted all the associated reviews are also deleted
     project=models.ForeignKey(Project,on_delete=models.CASCADE)
     body=models.TextField(null=True,blank=True)
@@ -44,6 +63,11 @@ class Review(models.Model):
 
     def __str__(self):
         return self.value
+    
+    
+    class Meta:
+        #to make sure no instance of review can have the same owner or project
+        unique_together=[['owner','project']]
 
 class Tag(models.Model):
     name=models.CharField(max_length=200)

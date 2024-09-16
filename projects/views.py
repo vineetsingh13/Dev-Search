@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Project, Tag
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from django.db.models import Q
+from django.contrib import messages
 from .utils import searchProjects, paginationProjects
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
@@ -28,8 +29,28 @@ def projects(request):
 def project(request,pk):
     
     projectObj= Project.objects.get(id=pk)
+
+    form=ReviewForm()
+
+    if request.method=='POST':
+        form=ReviewForm(request.POST)
+        review=form.save(commit=False)
+
+        #to set the owner and the project for which review is written
+        review.project=projectObj
+        review.owner=request.user.profile
+        review.save()
+
+        #update vote count and ratio
+        #we can run it directly like an attribute and not method
+        projectObj.getVoteCount
+
+        messages.success(request,"Your review was recorded successfully!")
+
+        return redirect('project',pk=projectObj.id)
+
     #tags=projectObj.tags.all()
-    return render(request, 'projects/single-project.html',{'project':projectObj})  
+    return render(request, 'projects/single-project.html',{'project':projectObj,'form':form})  
 
 
 @login_required(login_url="login")

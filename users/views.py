@@ -56,7 +56,11 @@ def loginPage(request):
         #it will set the session in the browsers cookies
         if user is not None:
             login(request,user)
-            return redirect('profiles')
+
+            #below if the user is not logged in and trying to review a project
+            #the user will be taken to the login page and after logging in again back to the project page
+            #if next is empty take user to account page
+            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         else:
             messages.error(request,'username or password is incorrect')
 
