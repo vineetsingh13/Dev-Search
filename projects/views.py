@@ -14,10 +14,12 @@ from django.contrib.auth.decorators import login_required
 def projects(request):
 
     projects, search_query=searchProjects(request)
-
     custom_range,projects=paginationProjects(request,projects,results=6)
 
+    # print(search_query , custom_range);
+
     context ={'projects': projects,'search_query':search_query,'custom_range':custom_range}
+    print(context);
     return render(request, 'projects/projects.html',context) 
 
 

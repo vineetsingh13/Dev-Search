@@ -1,3 +1,4 @@
+
 {% extends 'main.html' %}
 
 {% block content %}
@@ -15,6 +16,7 @@
 
 
 <!-- Main Section -->
+
 <main class="projects">
     <section class="hero-section text-center">
       <div class="container container--narrow">
@@ -24,7 +26,7 @@
 
         <div class="hero-section__search">
           <form class="form" action="{% url 'projects' %}" method="get">
-            <div class="form__field">
+            <div id="searchForm" class="form__field">
               <label for="formInput#search">Search By Projects </label>
               <input class="input input--text" id="formInput#search" type="text" name="search_query"
                 placeholder="Search by Project Title" value="{{search_query}}"/>

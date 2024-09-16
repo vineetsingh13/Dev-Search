@@ -34,7 +34,7 @@ def searchProjects(request):
     search_query=''
     if request.GET.get('search_query'):
         search_query=request.GET.get('search_query')
-
+    print("ajhvdgja",search_query);
     tags=Tag.objects.filter(name__icontains=search_query)
 
     projects=Project.objects.distinct().filter(
