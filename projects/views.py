@@ -41,7 +41,7 @@ def createProject(request):
             #first save the project and then assign the project to the respective profile and then save
             project.owner=profile
             project.save()
-            return redirect('projects')
+            return redirect('account')
 
     return render(request,"projects/project_form.html",context)
 
@@ -63,7 +63,7 @@ def updateProject(request,pk):
         if form.is_valid():
             #save() to save in db
             form.save()
-            return redirect('projects')
+            return redirect('account')
 
     return render(request,"projects/project_form.html",context)
 
@@ -78,4 +78,4 @@ def delete_project(request,pk):
         return redirect('projects')
     
     context={'object':project}
-    return render(request,'projects/delete_template.html',context)
+    return render(request,'delete_template.html',context)
