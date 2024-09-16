@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Project
+from .models import Project, Tag
 from .forms import ProjectForm
+from django.db.models import Q
+from .utils import searchProjects
 from django.contrib.auth.decorators import login_required
 
 
@@ -9,8 +11,11 @@ from django.contrib.auth.decorators import login_required
 #and we access them with {{page}} in the html pages
 @login_required(login_url="login")
 def projects(request):
-    projects=Project.objects.all()
-    context ={'projects': projects}
+
+
+    projects, search_query=searchProjects(request)
+
+    context ={'projects': projects,'search_query':search_query}
     return render(request, 'projects/projects.html',context) 
 
 

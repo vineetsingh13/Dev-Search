@@ -2,15 +2,18 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile, Skill
+from django.db.models import Q
 from django.contrib import messages
+from .utils import searchProfiles
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 # Create your views here.
 
 @login_required(login_url="login")
 def profiles(request):
-    profiles=Profile.objects.all()
-    context={'profiles': profiles}
+
+    profiles, search_query=searchProfiles(request)
+    context={'profiles': profiles,'search_query':search_query}
     return render(request,'users/profiles.html',context)
 
 
