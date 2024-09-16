@@ -68,8 +68,12 @@
       </div>
     </section>
 
-    
+    <!-- here we pass the projects as value to the common pagination component so that it can be used at any place -->
+    {% include 'pagination.html' with queryset=projects custom_range=custom_range %}
   </main>
+
+
+{% endblock content %}
 
 <!-- the below code tells us how to execute loops
 <ul>
@@ -82,4 +86,3 @@
 </ul>-->
 
 
-{% endblock content %}

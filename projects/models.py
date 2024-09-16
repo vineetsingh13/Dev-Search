@@ -23,6 +23,9 @@ class Project(models.Model):
     #we use this str to specify the format on how or what value is to be printed when the class is called
     def __str__(self):
         return self.title
+    
+    class Meta:
+        ordering=['-created']
         
 
 class Review(models.Model):
