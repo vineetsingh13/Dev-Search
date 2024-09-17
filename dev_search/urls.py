@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('projects/',include('projects.urls')),
     path('',include('users.urls')),
+    path('api/',include('api.urls')),
 ]
 
 #to make django know from where to load the images on the web page

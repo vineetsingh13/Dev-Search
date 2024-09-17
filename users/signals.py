@@ -2,6 +2,8 @@ from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
+from django.core.mail import send_mail
+from django.conf import settings
 
 #creating a seperate file for signals doesnot make django know when to run these signals
 #if we mention these in same files as models.py it will work but here not
@@ -19,6 +21,8 @@ def createProfile(sender, instance, created,**kwargs):
             email=user.email,
             name=user.first_name
         )
+
+    
 
 
 def deleteUser(sender, instance,**kwargs):
