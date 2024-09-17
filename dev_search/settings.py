@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #the below way we register our app with the main projectt
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
