@@ -45,6 +45,16 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+#we want the rest_framework app to use jwt authentication instead of session based authentication
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
