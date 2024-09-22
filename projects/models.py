@@ -5,7 +5,7 @@ from users.models import Profile
 
 
 class Project(models.Model):
-    owner=models.ForeignKey(Profile,null=True,blank=True,on_delete=models.SET_NULL)
+    owner=models.ForeignKey(Profile,null=True,blank=True,on_delete=models.CASCADE)
     title=models.CharField(max_length=200)
     #here null is for the table and blank is for the template
     description=models.TextField(null=True,blank=True)
@@ -27,6 +27,15 @@ class Project(models.Model):
     class Meta:
         ordering=['-vote_ratio','-vote_total','title']
 
+
+    @property
+    def imageURL(self):
+        try:
+            url=self.featured_image.url
+        except:
+            url=''
+
+        return url
 
     def reviewers(self):
         #getting a list of all the owners of project and people who have reviewed to stop them to write further review

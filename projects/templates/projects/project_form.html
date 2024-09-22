@@ -7,7 +7,7 @@
 <main class="formPage my-xl">
     <div class="content-box">
         <div class="formWrapper">
-            <a class="backButton" href="#"><i class="im im-angle-left"></i></a>
+            <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
             <br>
 
             <form class="form" method="POST" enctype="multipart/form-data">
@@ -21,7 +21,21 @@
                     {{field}}
                 </div>
                 {% endfor %}
+
+                <div class="form__field">
+                    <label for="formInput#text">Edit Tags</label>
+                    {% for tag in project.tags.all %}
+                        <div class="project-tag tag tag--pill tag--main">
+                            <input type="checkbox" name="tags_to_remove" value="{{ tag.id }}" style="margin-right: 4px;">
+                            {{ tag.name }}
+                        </div>
+                    {% endfor %}
+                </div>
                 
+                <div class="form__field">
+                    <label for="formInput#text">Add Tags</label>
+                    <textarea name="newtags" class="input" placeholder="Eg - Html, CSS, JS...."></textarea>
+                </div>
 
                 
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />

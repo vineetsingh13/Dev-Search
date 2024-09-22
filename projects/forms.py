@@ -13,7 +13,7 @@ class ProjectForm(ModelForm):
     class Meta:
 
         model=Project
-        fields=['title','featured_image', 'description','demo_link','source_link','tags']
+        fields=['title','featured_image', 'description','demo_link','source_link']
         #fields='__all__'
 
         #to choose the widget we want with each field in the form

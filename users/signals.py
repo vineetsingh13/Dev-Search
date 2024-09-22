@@ -22,14 +22,20 @@ def createProfile(sender, instance, created,**kwargs):
             name=user.first_name
         )
 
-    
+     
 
 
 def deleteUser(sender, instance,**kwargs):
     #here we are creating a signal when the profile is deleted the user is also deleted
-    user=instance.user
-    user.delete()
-    print('deleteing user....')
+    #below we are trying to delete user as soon as profile is deleted
+    #but we have already set oncascade delete in model for profile and user
+    #so we would get error here if we dont add this inside try catch block
+    try:
+        user=instance.user
+        user.delete()
+        print('deleteing user....')
+    except:
+        pass
 
 
 def updateUser(sender,instance,created,**kwargs):

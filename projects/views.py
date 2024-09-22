@@ -60,6 +60,8 @@ def createProject(request):
     context={'form':form}
 
     if request.method=='POST':
+
+        newtags=request.POST.get('newtags').replace(','," ").split()
         #print(request.POST)
         form=ProjectForm(request.POST,request.FILES)
         if form.is_valid():
@@ -71,6 +73,10 @@ def createProject(request):
             #first save the project and then assign the project to the respective profile and then save
             project.owner=profile
             project.save()
+
+            for tag in newtags:
+                tag,created=Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             return redirect('account')
 
     return render(request,"projects/project_form.html",context)
@@ -85,14 +91,30 @@ def updateProject(request,pk):
     #below we make sure only the respective user can edit the project
     project=profile.project_set.get(id=pk)
     form=ProjectForm(instance=project)
-    context={'form':form}
+    context={'form':form,'project':project}
 
     if request.method=='POST':
         #print(request.POST)
+        #print("data", request.POST)
+
+        tag_remove=request.POST.getlist('tags_to_remove')
+        
+        newtags=request.POST.get('newtags').replace(','," ").split()
+        
         form=ProjectForm(request.POST,request.FILES,instance=project)
         if form.is_valid():
             #save() to save in db
             form.save()
+
+            for tag_id in tag_remove:
+                tag = Tag.objects.get(id=tag_id)
+                project.tags.remove(tag)
+
+            #below we are checking if the new tag already exists or not if not we add to the database
+            for tag in newtags:
+                tag,created=Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
+
             return redirect('account')
 
     return render(request,"projects/project_form.html",context)
